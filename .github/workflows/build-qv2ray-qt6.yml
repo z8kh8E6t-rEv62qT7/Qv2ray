@@ -2,7 +2,7 @@ name: Qv2ray build matrix - Qt6
 
 on:
   workflow_dispatch:
-    branches: [dev]
+    branches: [ master ]
 
 jobs:
   build:
