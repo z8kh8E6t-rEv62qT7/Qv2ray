@@ -34,7 +34,7 @@ jobs:
         if: matrix.platform == 'windows-2019'
         uses: ilammy/msvc-dev-cmd@master
         with:
-          sdk: "10.0.22000.194"
+          sdk: "10.0.22000.0"
           toolset: "14.31"
           arch: x64
       - name: Install Python
