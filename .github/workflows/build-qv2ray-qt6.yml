@@ -1,9 +1,6 @@
 name: Qv2ray build matrix - Qt6
 
-on:
-  workflow_dispatch:
-    branches: [ master ]
-
+on: workflow_dispatch
 jobs:
   build:
     strategy:
@@ -29,7 +26,7 @@ jobs:
         shell: bash
         run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
       - name: Checking out sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@main
         with:
           submodules: "recursive"
       # --------------------------------------------------------
@@ -37,22 +34,22 @@ jobs:
         if: matrix.platform == 'windows-2019'
         uses: ilammy/msvc-dev-cmd@master
         with:
-          sdk: "10.0.19041.0"
-          toolset: "14.29"
+          sdk: "10.0.22000.194"
+          toolset: "14.31"
           arch: x64
       - name: Install Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@main
         with:
-          python-version: "3.10.1"
+          python-version: "3.10.4"
           architecture: x64
       - name: Cache Qt
         id: cache-qt
-        uses: actions/cache@v2
+        uses: actions/cache@main
         with:
           path: ../Qt
           key: QtCache-${{ matrix.platform }}-${{ matrix.qt_version }}
       - name: Installing Qt
-        uses: jurplel/install-qt-action@v2
+        uses: jurplel/install-qt-action@master
         with:
           version: ${{ matrix.qt_version }}
           arch: ${{ matrix.qtarch }}
@@ -195,14 +192,14 @@ jobs:
       # --------------------------------------------------------
       - name: Win - ${{ matrix.qt_version }} - Create 7z Release
         if: matrix.platform == 'windows-2019'
-        uses: DuckSoft/create-7z-action@v1.0
+        uses: DuckSoft/create-7z-action@master
         with:
           pathSource: ./build/deployment/
           pathTarget: ./release.7z
 
       - name: Win - ${{ matrix.qt_version }} - Upload binaries to release
         if: matrix.platform == 'windows-2019'
-        uses: svenstaro/upload-release-action@v2
+        uses: svenstaro/upload-release-action@master
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: release.7z
