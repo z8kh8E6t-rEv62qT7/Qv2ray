@@ -35,7 +35,7 @@ jobs:
         uses: ilammy/msvc-dev-cmd@master
         with:
           sdk: "10.0.22000.0"
-          toolset: "14.31"
+          toolset: "14.31.31103"
           arch: x64
       - name: Install Python
         uses: actions/setup-python@main
